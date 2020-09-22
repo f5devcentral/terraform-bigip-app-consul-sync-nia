@@ -8,10 +8,9 @@ terraform {
 }
 
 provider "bigip" {
-  //address = "10.145.67.133"
-  address  = "10.145.73.178"
-  username = "admin"
-  password = "F5site02"
+  address  = var.bigip_host
+  username = var.bigip_user
+  password = var.bigip_passwd
 }
 
 module bigip-consul-nia {

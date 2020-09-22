@@ -13,7 +13,7 @@ data "template_file" "as3_init" {
   vars = {
     tenant_name    = var.tenant_name,
     pool_name      = var.pool_name,
-    server_address = jsonencode(setunion(local.addresses,[]))
+    server_address = jsonencode(setunion(local.addresses, []))
     service_port   = 80
   }
 }

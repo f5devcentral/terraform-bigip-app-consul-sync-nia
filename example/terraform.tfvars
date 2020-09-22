@@ -67,3 +67,6 @@ services = {
     node_meta = {}
   }
 }
+bigip_host   = "10.145.73.178"
+bigip_user   = "admin"
+bigip_passwd = "F5site02"

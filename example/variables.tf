@@ -20,3 +20,7 @@ variable "services" {
     })
   )
 }
+
+variable bigip_host {}
+variable bigip_user {}
+variable bigip_passwd {}
