@@ -7,32 +7,16 @@ terraform {
   }
 }
 
-data "template_file" "as3_init_service" {
-  for_each = local.grouped
-  template = file("${path.module}/as3_service.tmpl")
-  vars = {
-    app_name          = each.key
-    vs_server_address = jsonencode(["10.10.10.10"])
-    //vs_server_address = jsonencode({for i, r in each.value.*.meta:  })
-    //vs_server_address = jsonencode(lookup({for i, r in each.value.*.node_meta:  i => r},"virtulserverip"))
-    //vs_server_address = jsonencode([lookup(each.value, "virtulserverip")])
-    pool_name = format("%s-pool", each.key)
-    //server_address = jsonencode(setunion(["192.168.1.1"], []))
-    server_address = jsonencode(setunion(each.value.*.node_address, []))
-    service_port   = 80
-  }
-}
-
 data "template_file" "as3_init" {
   for_each = local.grouped
   template = file("${path.module}/as3.tmpl")
   vars = {
     tenant_name       = var.tenant_name,
     app_name          = each.key
-    vs_server_address = jsonencode(["10.10.10.10"])
+    vs_server_address = jsonencode(distinct(each.value.*.meta.VSIP))
     pool_name         = format("%s-pool", each.key)
-    server_address    = jsonencode(setunion(each.value.*.node_address, []))
-    service_port      = 80
+    service_address   = jsonencode(distinct(each.value.*.node_address))
+    service_port      = jsonencode(element(distinct(each.value.*.port), 0))
   }
 }
 
@@ -61,22 +45,12 @@ locals {
       if lookup(var.services[id].meta, "VSIP", "") != "" && lookup(var.services[id].meta, "VSPORT", "") != ""
     ]
   }
-  app_list = [
-    for id, s in local.grouped :
-  s]
-
-}
-output "service_ids" {
-  value = local.service_ids
 }
 
-output "service_instances" {
-  //for_each = local.grouped
-  value = local.grouped
-}
-
-
-// output addresses {
-//   value = setunion(local.addresses,[])
+// output "service_ids" {
+//   value = local.service_ids
 // }
 
+// output "service_instances" {
+//   value = local.grouped
+// }

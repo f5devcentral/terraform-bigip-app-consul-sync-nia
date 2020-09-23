@@ -18,10 +18,10 @@ module bigip-consul-nia {
   services = var.services
 }
 
-output "service_instances" {
-  value = module.bigip-consul-nia.service_instances
-}
+// output "service_instances" {
+//   value = module.bigip-consul-nia.service_instances
+// }
 
-output "service_ids" {
-  value = module.bigip-consul-nia.service_ids
-}
+// output "service_ids" {
+//   value = module.bigip-consul-nia.service_ids
+// }
