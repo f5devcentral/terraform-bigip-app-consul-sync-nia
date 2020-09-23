@@ -2,15 +2,14 @@ variable "services" {
   description = "Consul services monitored by Consul NIA"
   type = map(
     object({
-      id        = string
-      name      = string
-      address   = string
-      port      = number
-      status    = string
-      meta      = map(string)
-      tags      = list(string)
-      namespace = string
-
+      id                    = string
+      name                  = string
+      address               = string
+      port                  = number
+      status                = string
+      meta                  = map(string)
+      tags                  = list(string)
+      namespace             = string
       node                  = string
       node_id               = string
       node_address          = string
