@@ -18,9 +18,9 @@ module bigip-consul-nia {
   services = var.services
 }
 
-// output "service_instances" {
-//   value = module.bigip-consul-nia.service_instances
-// }
+output "as3_json" {
+  value = module.bigip-consul-nia.as3_json
+}
 
 // output "service_ids" {
 //   value = module.bigip-consul-nia.service_ids

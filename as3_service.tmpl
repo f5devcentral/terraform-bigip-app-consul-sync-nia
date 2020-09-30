@@ -1,23 +1,21 @@
 "${app_name}": {
-    "class": "Application",
-    "template": "http",
-    "serviceMain": {
-        "class": "Service_HTTP",
-        "virtualAddresses": ${vs_server_address},
-        "virtualPort": 80,
-        "pool": "${pool_name}"
-    },
-    "${pool_name}": {
-        "class": "Pool",
-        "monitors": [
-            "http"
-            ],
-        "members": [
-            {
-           "servicePort": ${service_port},
-           "serverAddresses": ${server_address},
-           "shareNodes": true
+                "class": "Application",
+                "template": "http",
+                "serviceMain": {
+                    "class": "Service_HTTP",
+                    "virtualAddresses": ${vs_server_address},
+                    "virtualPort": ${vs_server_port},
+                    "pool": "${pool_name}"
+                },
+                "${pool_name}": {
+                    "class": "Pool",
+                    "monitors": [
+                        "http"
+                    ],
+                    "members": [{
+                        "servicePort": ${service_port},
+                        "serverAddresses": ${service_address},
+                        "shareNodes": true
+                    }]
+                }
             }
-           }]
-    }
-}

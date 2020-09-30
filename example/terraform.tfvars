@@ -6,7 +6,7 @@ services = {
     port    = 5000
     meta = {
       VSIP   = "10.10.10.10"
-      VSPORT = "80"
+      VSPORT = 80
     }
     status          = "passing"
     tags            = ["tacos"]
@@ -28,7 +28,7 @@ services = {
     port    = 5000
     meta = {
       VSIP   = "10.10.10.10"
-      VSPORT = "80"
+      VSPORT = 80
     }
     status          = "passing"
     tags            = ["tacos"]
@@ -49,7 +49,8 @@ services = {
     name    = "web"
     port    = 5000
     meta = {
-      foobar_meta_value = "baz"
+      VSIP   = "10.10.10.10"
+      VSPORT = 8080
     }
     tags            = ["tacos"]
     namespace       = null
@@ -72,7 +73,8 @@ services = {
     name    = "web"
     port    = 5000
     meta = {
-      foobar_meta_value = "baz"
+      VSIP   = "10.10.10.10"
+      VSPORT = 8080
     }
     tags            = ["burrito"]
     namespace       = null

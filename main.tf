@@ -7,6 +7,28 @@ terraform {
   }
 }
 
+data "template_file" "as3_init_service" {
+  for_each = local.grouped
+  template = file("${path.module}/as3_service.tmpl")
+  vars = {
+    app_name          = each.key
+    vs_server_address = jsonencode(distinct(each.value.*.meta.VSIP))
+    vs_server_port    = tonumber(distinct(each.value.*.meta.VSPORT)[0])
+    pool_name         = format("%s-pool", each.key)
+    service_address   = jsonencode(distinct(each.value.*.node_address))
+    service_port      = jsonencode(element(distinct(each.value.*.port), 0))
+  }
+}
+
+data "template_file" "as3_init_fs" {
+  template = file("${path.module}/as3_fullservice.tmpl")
+  vars = {
+    tenant_name = var.tenant_name,
+    app_service = join(",", values(data.template_file.as3_init_service).*.rendered)
+  }
+}
+
+
 data "template_file" "as3_init" {
   for_each = local.grouped
   template = file("${path.module}/as3.tmpl")
@@ -20,9 +42,13 @@ data "template_file" "as3_init" {
   }
 }
 
+// resource "bigip_as3" "as3-example-consul" {
+//   for_each = local.grouped
+//   as3_json = data.template_file.as3_init[each.key].rendered
+// }
+
 resource "bigip_as3" "as3-example-consul" {
-  for_each = local.grouped
-  as3_json = data.template_file.as3_init[each.key].rendered
+  as3_json = jsonencode(jsondecode(data.template_file.as3_init_fs.rendered))
 }
 
 locals {
@@ -47,9 +73,16 @@ locals {
   }
 }
 
-// output "service_ids" {
-//   value = local.service_ids
+// output "as3_json" {
+//   //value = values(data.template_file.as3_init)[*].rendered
+//   value = join(",",values(data.template_file.as3_init_service).*.rendered)
 // }
+
+output "as3_json" {
+  //value = values(data.template_file.as3_init)[*].rendered
+  value = data.template_file.as3_init_fs.rendered
+}
+
 
 // output "service_instances" {
 //   value = local.grouped
