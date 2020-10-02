@@ -1,5 +1,5 @@
 variable "services" {
-  description = "Consul services monitored by Consul NIA"
+  description = "Consul services monitored by consul-terraform-sync"
   type = map(
     object({
       id        = string
@@ -24,11 +24,11 @@ variable "services" {
 variable "tenant_name" {
   description = "The name of the tenant"
   type        = string
-  default     = "consul-nia"
+  default     = "consul-terraform-sync"
 }
 
 variable "pool_name" {
-  description = "The name of the web pool where consul-nia services will reside"
+  description = "The name of the web pool where consul-terraform-sync services will reside"
   type        = string
   default     = "web_pool"
 }
@@ -36,7 +36,7 @@ variable "pool_name" {
 variable "tag_name" {
   description = "The name of the tag to create and use for dynamic address group filtering of Consul service IPs"
   type        = string
-  default     = "consul-nia"
+  default     = "consul-terraform-sync"
 }
 
 variable "consul_service_tags" {
