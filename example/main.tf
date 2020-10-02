@@ -17,3 +17,11 @@ module bigip-consul-nia {
   source   = "../"
   services = var.services
 }
+
+output "as3_json" {
+  value = module.bigip-consul-nia.as3_json
+}
+
+// output "service_ids" {
+//   value = module.bigip-consul-nia.service_ids
+// }
