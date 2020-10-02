@@ -1,5 +1,5 @@
 variable "services" {
-  description = "Consul services monitored by Consul NIA"
+  description = "Consul services monitored by consul-terraform-sync"
   type = map(
     object({
       id                    = string

@@ -68,8 +68,7 @@ The 3 service nodes in Consul below will create 2 AS3 applications on BIG-IP wit
   ```
 
 ### BIG-IP Applications (AS3)
-App: f5s1
-App: f5s2
+
 | App | VirtualServer | Members | 
 |------|-------------|------|
 | f5s1 | 10.39.27.5:8080 | 10.27.39.27 10.27.39.28  |
