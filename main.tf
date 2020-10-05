@@ -21,38 +21,18 @@ data "template_file" "as3_init_service" {
 }
 
 data "template_file" "as3_init_fs" {
-  template = file("${path.module}/as3_fullservice.tmpl")
+  template = file("${path.module}/as3_config.tmpl")
   vars = {
     tenant_name = var.tenant_name,
     app_service = join(",", values(data.template_file.as3_init_service).*.rendered)
   }
 }
 
-
-data "template_file" "as3_init" {
-  for_each = local.grouped
-  template = file("${path.module}/as3.tmpl")
-  vars = {
-    tenant_name       = var.tenant_name,
-    app_name          = each.key
-    vs_server_address = jsonencode(distinct(each.value.*.meta.VSIP))
-    pool_name         = format("%s-pool", each.key)
-    service_address   = jsonencode(distinct(each.value.*.node_address))
-    service_port      = jsonencode(element(distinct(each.value.*.port), 0))
-  }
-}
-
-// resource "bigip_as3" "as3-example-consul" {
-//   for_each = local.grouped
-//   as3_json = data.template_file.as3_init[each.key].rendered
-// }
-
 resource "bigip_as3" "as3-example-consul" {
   as3_json = jsonencode(jsondecode(data.template_file.as3_init_fs.rendered))
 }
 
 locals {
-  //as3_json = data.template_file.as3_init
   addresses = [
     for id, s in var.services :
     "${s.node_address}"
@@ -73,17 +53,6 @@ locals {
   }
 }
 
-// output "as3_json" {
-//   //value = values(data.template_file.as3_init)[*].rendered
-//   value = join(",",values(data.template_file.as3_init_service).*.rendered)
-// }
-
 output "as3_json" {
-  //value = values(data.template_file.as3_init)[*].rendered
   value = data.template_file.as3_init_fs.rendered
 }
-
-
-// output "service_instances" {
-//   value = local.grouped
-// }

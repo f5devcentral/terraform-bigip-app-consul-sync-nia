@@ -13,15 +13,11 @@ provider "bigip" {
   password = var.bigip_passwd
 }
 
-module bigip-consul-nia {
+module bigip-consul-terraform-sync {
   source   = "../"
   services = var.services
 }
 
 output "as3_json" {
-  value = module.bigip-consul-nia.as3_json
+  value = module.bigip-consul-terraform-sync.as3_json
 }
-
-// output "service_ids" {
-//   value = module.bigip-consul-nia.service_ids
-// }
