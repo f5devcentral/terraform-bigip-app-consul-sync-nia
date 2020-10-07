@@ -7,6 +7,7 @@ services = {
     meta = {
       VSIP   = "10.10.10.10"
       VSPORT = 80
+      AS3TMPL = "http"
     }
     status          = "passing"
     tags            = ["tacos"]
@@ -29,6 +30,7 @@ services = {
     meta = {
       VSIP   = "10.10.10.10"
       VSPORT = 80
+      AS3TMPL = "http"
     }
     status          = "passing"
     tags            = ["tacos"]
@@ -51,6 +53,7 @@ services = {
     meta = {
       VSIP   = "10.10.10.10"
       VSPORT = 8080
+      AS3TMPL = "tcp"
     }
     tags            = ["tacos"]
     namespace       = null
@@ -75,6 +78,7 @@ services = {
     meta = {
       VSIP   = "10.10.10.10"
       VSPORT = 8080
+      AS3TMPL = "tcp"
     }
     tags            = ["burrito"]
     namespace       = null

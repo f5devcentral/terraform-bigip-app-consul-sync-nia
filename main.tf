@@ -2,14 +2,15 @@ terraform {
   required_providers {
     bigip = {
       source  = "f5networks/bigip"
-      version = "1.3.2"
+      version = "~> 1.3.2"
     }
   }
 }
 
 data "template_file" "as3_init_service" {
   for_each = local.grouped
-  template = file("${path.module}/as3_service.tmpl")
+  template = file("${path.module}/as3templates/${distinct(each.value.*.meta.AS3TMPL)[0]}.tmpl")
+
   vars = {
     app_name          = each.key
     vs_server_address = jsonencode(distinct(each.value.*.meta.VSIP))
@@ -51,6 +52,7 @@ locals {
       if lookup(var.services[id].meta, "VSIP", "") != "" && lookup(var.services[id].meta, "VSPORT", "") != ""
     ]
   }
+
 }
 
 output "as3_json" {
