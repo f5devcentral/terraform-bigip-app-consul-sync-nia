@@ -1,6 +1,6 @@
 # BIG-IP Application Consul-Terraform-Sync Module
 
-This terraform module leverages consul-terraform-sync to create and update application services on BIG-IP based on registered services within Consul.
+This terraform module leverages consul-terraform-sync to create and update application services on BIG-IP based on registered services within Consul. Please open github issues with feature requests or bugs for further advancement.
 
 terraform-bigip-app-consul-sync
 
@@ -8,11 +8,11 @@ terraform-bigip-app-consul-sync
 This modules supports Terraform 0.13 and higher
 
 ## Notes
-* Services definitions in consul must include meta-data for the BIG-IP VirtualServer IP and Port (see examples).
-* Initial module hard codes the BIG-IP VirtualServer template to HTTP. Future versions may support additional application templates based  on github issues opened.
-* Consul services must be listed within the *consul-terraform-sync* configuration.
-* All consul services will be placed within the same AS3 Tenant on BIG-IP called **consul-terraform-sync**
-* Application and Pool on BIG-IP will be named from the Consul Service
+* Services definitions in consul must include meta-data for the BIG-IP VirtualServer IP (VSIP), Port (VSPORT), and AS3 Template name (AS3TMPL)...(see examples).
+* AS3 templates must be placed within the `as3templates` directory of the module. The module ships with an HTTP and TCP template for getting started.
+* Consul services that you wish to auto-update must be listed within the *consul-terraform-sync* configuration.
+* All consul services will be placed within the same AS3 Tenant on BIG-IP named **consul-terraform-sync**
+* The Application and Pool on BIG-IP will be named from the Consul Service
 
 
 ## Examples
@@ -32,7 +32,8 @@ The 3 service nodes in Consul below will create 2 AS3 applications on BIG-IP wit
             "Address": "10.27.39.27",
             "Meta": {
                 "VSIP": "10.39.27.5",
-                "VSPORT": "8080"
+                "VSPORT": "8080",
+                "AS3TMPL": "http"
             },
             "Port": 8000
         }
@@ -46,7 +47,8 @@ The 3 service nodes in Consul below will create 2 AS3 applications on BIG-IP wit
             "Address": "10.27.39.28",
             "Meta": {
                 "VSIP": "10.39.27.5",
-                "VSPORT": "8080"
+                "VSPORT": "8080",
+                "AS3TMPL": "http"
             },
             "Port": 8000
         }
@@ -60,9 +62,10 @@ The 3 service nodes in Consul below will create 2 AS3 applications on BIG-IP wit
             "Address": "10.27.39.29",
             "Meta": {
                 "VSIP": "10.39.27.6",
-                "VSPORT": "80"
+                "VSPORT": "22",
+                "AS3TMPL": "tcp"
             },
-            "Port": 8000
+            "Port": 22
         }
     }
   ```
@@ -71,8 +74,8 @@ The 3 service nodes in Consul below will create 2 AS3 applications on BIG-IP wit
 
 | App | VirtualServer | Members | 
 |------|-------------|------|
-| f5s1 | 10.39.27.5:8080 | 10.27.39.27 10.27.39.28  |
-| f5s2 | 10.39.27.6:80 | 10.27.39.29 |
+| f5s1 (http app) | 10.39.27.5:8080 | 10.27.39.27 10.27.39.28  |
+| f5s2 (tcp app) | 10.39.27.6:80 | 10.27.39.29 |
 
 
 ### Config for consul-terraform-sync
@@ -101,7 +104,7 @@ task {
   description = "AS3 HTTP APPS"
   source = "f5devcentral/bigip/app-consul-sync"
   providers = ["bigip"]
-  services = []
+  services = ["f5s1","f5s2"]
   variable_files = ["/Users/test/test.tfvars"]
 }
 ```
