@@ -4,11 +4,26 @@ This terraform module leverages consul-terraform-sync to create and update appli
 
 terraform-bigip-app-consul-sync
 
-## Terraform Version
-This modules supports Terraform 0.13 and higher
+<img src="./images/cts.drawio.png" width="100%">
 
-## Notes
-* Services definitions in consul must include meta-data for the BIG-IP VirtualServer IP (VSIP), Port (VSPORT), and AS3 Template name (AS3TMPL)...(see examples).
+## Requirements
+
+* BIG-IP AS3 >= 3.20
+
+| Name | Version |
+|------|---------|
+| terraform | >= 0.13 |
+| consul-terraform-sync | >= 0.1.0 |
+| consul | >= 1.7 |
+
+## Providers
+
+| Name | Version |
+|------|---------|
+| bigip | ~> 1.3.2 |
+
+## Setup / Notes
+* Service definitions in consul must include meta-data for the BIG-IP VirtualServer IP (VSIP), Port (VSPORT), and AS3 Template name (AS3TMPL)...(see examples).
 * AS3 templates must be placed within the `as3templates` directory of the module. The module ships with an HTTP and TCP template for getting started.
 * Consul services that you wish to auto-update must be listed within the *consul-terraform-sync* configuration.
 * All consul services will be placed within the same AS3 Tenant on BIG-IP named **consul-terraform-sync**
@@ -16,11 +31,12 @@ This modules supports Terraform 0.13 and higher
 
 
 ## Examples
-The 3 service nodes in Consul below will create 2 AS3 applications on BIG-IP with pool members as the node_addresses from consul.
+The 3  example service nodes in Consul below will create 2 AS3 applications on BIG-IP with pool members as the node_addresses from consul.
 
 
 
-### Consul Service Input
+### Consul Services (Input)
+The API payloads for consul services registration below are used as examples. The same input would normally be provided through the HCL configuration when a service node registers itself.
 
   ```
     {
@@ -70,7 +86,12 @@ The 3 service nodes in Consul below will create 2 AS3 applications on BIG-IP wit
     }
   ```
 
-### BIG-IP Applications (AS3)
+  The data is then transformed via **Consul-Terraform-Sync** and provided to the Terraform module as an input variable.
+
+### BIG-IP Applications (AS3 Output)
+
+The Terraform module transforms the Consul services into BIG-IP applications using the templates defined (TCP/HTTP by default).
+
 
 | App | VirtualServer | Members | 
 |------|-------------|------|
@@ -80,7 +101,7 @@ The 3 service nodes in Consul below will create 2 AS3 applications on BIG-IP wit
 
 ### Config for consul-terraform-sync
 
-```
+``` terraform
 driver "terraform" {
   log = true
   required_providers {
@@ -101,11 +122,11 @@ provider "bigip" {
 
 task {
   name = "AS3"
-  description = "AS3 HTTP APPS"
+  description = "AS3 APPS"
   source = "f5devcentral/bigip/app-consul-sync"
   providers = ["bigip"]
   services = ["f5s1","f5s2"]
-  variable_files = ["/Users/test/test.tfvars"]
+  variable_files = ["/Users/test/test.tfvars"] # Specify tenant_name variable here to override the AS3 Tenant on BIG-IP
 }
 ```
 
