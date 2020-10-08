@@ -8,6 +8,8 @@ terraform-bigip-app-consul-sync
 
 ## Requirements
 
+* BIG-IP AS3 >= 3.20
+
 | Name | Version |
 |------|---------|
 | terraform | >= 0.13 |
