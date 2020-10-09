@@ -2,7 +2,9 @@
 
 This terraform module leverages consul-terraform-sync to create and update application services on BIG-IP based on registered services within Consul. Please open github issues with feature requests or bugs for further advancement.
 
-terraform-bigip-app-consul-sync
+Please find more information about setting up your environment with **Consul Network Infrastructure Automation (NIA)** within its [Documentation Page](https://www.consul.io/docs/nia/tasks).
+
+terraform-bigip-app-consul-sync-nia
 
 <img src="./images/cts.drawio.png" width="100%">
 
@@ -27,7 +29,7 @@ terraform-bigip-app-consul-sync
 * AS3 templates must be placed within the `as3templates` directory of the module. The module ships with an HTTP and TCP template for getting started.
 * Consul services that you wish to auto-update must be listed within the *consul-terraform-sync* configuration.
 * All consul services will be placed within the same AS3 Tenant on BIG-IP named **consul-terraform-sync** by default. You can override this by adding a variable called **tenant_name** to your tfvars file.
-* There will be a placeholder irule placed within the BIG-IP tenant to prevent it from being accidently removed.
+* There will be a placeholder irule placed within the BIG-IP tenant to prevent it from being accidently removed when no services are defined.
 * The Application and Pool on BIG-IP will be named from the Consul Service
 
 
@@ -123,11 +125,11 @@ provider "bigip" {
 
 task {
   name = "AS3"
-  description = "AS3 APPS"
-  source = "f5devcentral/bigip/app-consul-sync"
+  description = "Create AS3 Applications"
+  source = "f5devcentral/bigip/app-consul-sync-nia"
   providers = ["bigip"]
   services = ["f5s1","f5s2"]
-  variable_files = ["/Users/test/test.tfvars"] # Specify tenant_name variable here to override the AS3 Tenant on BIG-IP
+  variable_files = ["/Optional/test.tfvars"] # Specify tenant_name variable here to override the AS3 Tenant on BIG-IP
 }
 ```
 
