@@ -10,6 +10,14 @@
         "remark": "Sample Consul NIA demo",
         "${tenant_name}": {
             "class": "Tenant",
+            "placeHolderApp": {
+                "class": "Application",
+                    "nia-placeholder": {
+                        "class": "iRule",
+                        "remark": "placeholder",
+                        "iRule": "when CLIENT_ACCEPTED {}"
+                    }
+            }
             ${app_service}
         }
     }

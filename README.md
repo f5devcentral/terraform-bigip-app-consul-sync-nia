@@ -26,7 +26,8 @@ terraform-bigip-app-consul-sync
 * Service definitions in consul must include meta-data for the BIG-IP VirtualServer IP (VSIP), Port (VSPORT), and AS3 Template name (AS3TMPL)...(see examples).
 * AS3 templates must be placed within the `as3templates` directory of the module. The module ships with an HTTP and TCP template for getting started.
 * Consul services that you wish to auto-update must be listed within the *consul-terraform-sync* configuration.
-* All consul services will be placed within the same AS3 Tenant on BIG-IP named **consul-terraform-sync**
+* All consul services will be placed within the same AS3 Tenant on BIG-IP named **consul-terraform-sync** by default. You can override this by adding a variable called **tenant_name** to your tfvars file.
+* There will be a placeholder irule placed within the BIG-IP tenant to prevent it from being accidently removed.
 * The Application and Pool on BIG-IP will be named from the Consul Service
 
 
@@ -96,7 +97,7 @@ The Terraform module transforms the Consul services into BIG-IP applications usi
 | App | VirtualServer | Members | 
 |------|-------------|------|
 | f5s1 (http app) | 10.39.27.5:8080 | 10.27.39.27 10.27.39.28  |
-| f5s2 (tcp app) | 10.39.27.6:80 | 10.27.39.29 |
+| f5s2 (tcp app) | 10.39.27.6:22 | 10.27.39.29 |
 
 
 ### Config for consul-terraform-sync
