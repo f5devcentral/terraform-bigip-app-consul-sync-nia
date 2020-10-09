@@ -25,7 +25,7 @@ data "template_file" "as3_init_fs" {
   template = file("${path.module}/as3_config.tmpl")
   vars = {
     tenant_name = var.tenant_name,
-    app_service = join(",", values(data.template_file.as3_init_service).*.rendered)
+    app_service = join("", values(data.template_file.as3_init_service).*.rendered)
   }
 }
 
