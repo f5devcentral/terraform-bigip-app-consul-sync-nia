@@ -40,7 +40,7 @@ variable "tag_name" {
 }
 
 variable "consul_service_tags" {
-  description = "Adminstrative tags to add to Consul service address objects. These are existing tags on PAN-OS."
+  description = "Adminstrative tags to add to Consul service address objects. These are existing tags on BIG-IP."
   type        = list(string)
   default     = []
 }
