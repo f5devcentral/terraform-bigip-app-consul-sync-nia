@@ -6,9 +6,8 @@ Please find more information about setting up your environment with **Consul Net
 
 terraform-bigip-app-consul-sync-nia
 
-
 <p align="left">
-<img width="800" src=https://raw.githubusercontent.com/f5devcentral/terraform-bigip-app-consul-sync-nia/master/images/cts.drawio.png"> </a>
+<img width="100%"   src="https://raw.githubusercontent.com/f5devcentral/terraform-bigip-app-consul-sync-nia/master/images/cts.drawio.png"> </a>
 </p>
                                                                                                                                      
                                                                                                                                      
