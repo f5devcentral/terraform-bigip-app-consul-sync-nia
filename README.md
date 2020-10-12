@@ -6,8 +6,12 @@ Please find more information about setting up your environment with **Consul Net
 
 terraform-bigip-app-consul-sync-nia
 
-<img src="./images/cts.drawio.png" width="100%">
 
+<p align="left">
+<img width="800" src=https://raw.githubusercontent.com/f5devcentral/terraform-bigip-app-consul-sync-nia/master/images/cts.drawio.png"> </a>
+</p>
+                                                                                                                                     
+                                                                                                                                     
 ## Requirements
 
 * BIG-IP AS3 >= 3.20
