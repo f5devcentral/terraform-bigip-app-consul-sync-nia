@@ -129,7 +129,7 @@ provider "bigip" {
 task {
   name = "AS3"
   description = "Create AS3 Applications"
-  source = "f5devcentral/bigip/app-consul-sync-nia"
+  source = "f5devcentral/app-consul-sync-nia/bigip"
   providers = ["bigip"]
   services = ["f5s1","f5s2"]
   variable_files = ["/Optional/test.tfvars"] # Specify tenant_name variable here to override the AS3 Tenant on BIG-IP
