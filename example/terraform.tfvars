@@ -5,8 +5,8 @@ services = {
     name    = "foobar"
     port    = 5000
     meta = {
-      VSIP   = "10.10.10.10"
-      VSPORT = 80
+      VSIP    = "10.10.10.10"
+      VSPORT  = 80
       AS3TMPL = "http"
     }
     status          = "passing"
@@ -28,8 +28,8 @@ services = {
     name    = "foobar"
     port    = 5000
     meta = {
-      VSIP   = "10.10.10.10"
-      VSPORT = 80
+      VSIP    = "10.10.10.10"
+      VSPORT  = 80
       AS3TMPL = "http"
     }
     status          = "passing"
@@ -51,8 +51,8 @@ services = {
     name    = "web"
     port    = 5000
     meta = {
-      VSIP   = "10.10.10.10"
-      VSPORT = 8080
+      VSIP    = "10.10.10.10"
+      VSPORT  = 8080
       AS3TMPL = "tcp"
     }
     tags            = ["tacos"]
@@ -76,8 +76,8 @@ services = {
     name    = "web"
     port    = 5000
     meta = {
-      VSIP   = "10.10.10.10"
-      VSPORT = 8080
+      VSIP    = "10.10.10.10"
+      VSPORT  = 8080
       AS3TMPL = "tcp"
     }
     tags            = ["burrito"]

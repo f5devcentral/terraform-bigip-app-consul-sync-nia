@@ -19,8 +19,9 @@ provider "consul" {
 }
 
 module bigip-consul-terraform-sync {
-  source   = "../"
-  services = var.services
+  source           = "../"
+  services         = var.services
+  as3template_path = "${path.module}/default.tmpl"
 }
 
 output "as3_json" {

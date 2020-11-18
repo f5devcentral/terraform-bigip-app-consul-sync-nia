@@ -39,6 +39,12 @@ variable "tag_name" {
   default     = "consul-terraform-sync"
 }
 
+variable "as3template_path" {
+  description = "path of as3 template"
+  //type        = string
+  //default     = "${path.module}/default.tmpl"
+}
+
 variable "consul_service_tags" {
   description = "Adminstrative tags to add to Consul service address objects. These are existing tags on BIG-IP."
   type        = list(string)
