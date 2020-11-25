@@ -29,8 +29,8 @@ terraform-bigip-app-consul-sync-nia
 
 ## Setup / Notes
 * Service definitions in consul must include meta-data for the BIG-IP VirtualServer IP (VSIP), Port (VSPORT), and AS3 Template name (AS3TMPL)...(see examples).
-* AS3 templates must be placed within the `as3templates` directory of the module. The module ships with an HTTP and TCP template for getting started.
-* Consul services that you wish to auto-update must be listed within the *consul-terraform-sync* configuration.
+* AS3 templates must be placed within a directory and then referenced within tfvars using `as3template_path`. The module ships with an HTTP and TCP template as en example if this is not specified to a directory containing your customer templates.
+* Consul services that you wish to auto-update must be listed within the *consul-terraform-sync* configuration of the *Task*.
 * All consul services will be placed within the same AS3 Tenant on BIG-IP named **consul-terraform-sync** by default. You can override this by adding a variable called **tenant_name** to your tfvars file.
 * There will be a placeholder irule placed within the BIG-IP tenant to prevent it from being accidently removed when no services are defined.
 * The Application and Pool on BIG-IP will be named from the Consul Service
@@ -107,6 +107,11 @@ The Terraform module transforms the Consul services into BIG-IP applications usi
 
 ### Config for consul-terraform-sync
 
+Note that the tfvars variable file for this module has 2 primary variable inputs.
+* **as3template_path** to specify the path where your AS3 templates are stored. This one should always be used in a production environment as it will be unlikely that the example http/tcp templates will meet your application eactly.
+* **tenant_name** if you would like to use a specific partition on the BIG-IP with AS3
+
+
 ``` terraform
 driver "terraform" {
   log = true
@@ -132,7 +137,7 @@ task {
   source = "f5devcentral/app-consul-sync-nia/bigip"
   providers = ["bigip"]
   services = ["f5s1","f5s2"]
-  variable_files = ["/Optional/test.tfvars"] # Specify tenant_name variable here to override the AS3 Tenant on BIG-IP
+  variable_files = ["/Optional/test.tfvars"]
 }
 ```
 

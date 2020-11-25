@@ -9,7 +9,7 @@ terraform {
 
 data "template_file" "as3_init_service" {
   for_each = local.grouped
-  template = fileexists(var.as3template_path) ? file(var.as3template_path) : file("${path.module}/as3templates/${distinct(each.value.*.meta.AS3TMPL)[0]}.tmpl")
+  template = fileexists("${var.as3template_path}/${distinct(each.value.*.meta.AS3TMPL)[0]}.tmpl") ? file("${var.as3template_path}/${distinct(each.value.*.meta.AS3TMPL)[0]}.tmpl") : file("${path.module}/as3templates/${distinct(each.value.*.meta.AS3TMPL)[0]}.tmpl") 
 
   vars = {
     app_name          = each.key
@@ -36,7 +36,7 @@ resource "bigip_as3" "as3-example-consul" {
 locals {
   addresses = [
     for id, s in var.services :
-    "${s.node_address}"
+    s.node_address
   ]
 
   # Create a map of service names to instance IDs

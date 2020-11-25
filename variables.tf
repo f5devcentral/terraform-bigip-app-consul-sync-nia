@@ -42,7 +42,7 @@ variable "tag_name" {
 variable "as3template_path" {
   description = "path of as3 template"
   //type        = string
-  //default     = "${path.module}/default.tmpl"
+  default     = ""
 }
 
 variable "consul_service_tags" {
