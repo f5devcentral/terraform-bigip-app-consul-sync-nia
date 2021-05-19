@@ -125,7 +125,7 @@ consul {
   address = "10.1.2.3.4:8500"
 }
 
-provider "bigip" {
+provider_terraform "bigip" {
   address  = "10.1.2.5:8443"
   username = "admin"
   password = "pass"
